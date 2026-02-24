@@ -1,28 +1,21 @@
-Lesson 1. Fine-tuning fundamentals.
-
-Welcome. Today we’ll build a simple mental model for fine-tuning.
-
+<speak>
+Lesson one. Fine-tuning fundamentals.
+<break time="200ms"/>
+Welcome. Today we will build a simple mental model for fine-tuning.
+<break time="200ms"/>
 Think of an LLM like a talented intern. Prompting is giving better instructions. RAG is giving better reference material. Fine-tuning is teaching it your examples so it behaves the way you want, consistently.
-
-Here’s a quick greedy decision path.
-First, try prompting. If that works, you’re done. Cheapest win.
-If prompting fails, try RAG. If the model just needs better knowledge access, RAG is usually faster and cheaper than fine-tuning.
-If you need consistent behavior or a specific style and structure, then fine-tuning becomes the best next step.
-
-What changes with fine-tuning?
-The model internalizes your examples. That means less prompt engineering and more reliable output. But it also means you can accidentally teach it errors or cause it to regress on general tasks.
-
-Minimum data to start.
-You don’t need a huge dataset for a pilot. Aim for 50 to 200 high quality examples. Keep input and output format consistent. And reserve a small evaluation set, even 10 to 30 examples.
-
-Minimum evaluation to stay safe.
-Check your held out set. Run a few regression checks on basic tasks. And test a few edge cases.
-If it improves your task but breaks basics, you need to adjust.
-
-Quick recap.
-Prompting and RAG first. Fine-tune when behavior must be consistent. Start small, measure carefully, and let the greedy algorithm guide the next step.
-
-Mini exercise.
-Pick one task you care about. In two or three sentences, explain why prompting might fail, why RAG might fail, and what behavior you’d want fine-tuning to lock in.
-
+<break time="250ms"/>
+Here is a quick greedy decision path. First, try prompting. If that works, you are done. Cheapest win. If prompting fails, try RAG. If the model just needs better knowledge access, RAG is usually faster and cheaper than fine-tuning. If you need consistent behavior or a specific style and structure, then fine-tuning becomes the best next step.
+<break time="250ms"/>
+What changes with fine-tuning? The model internalizes your examples. That means less prompt engineering and more reliable output. But it also means you can accidentally teach it errors or cause it to regress on general tasks.
+<break time="250ms"/>
+Minimum data to start. You do not need a huge dataset for a pilot. Aim for 50 to 200 high quality examples. Keep input and output format consistent. And reserve a small evaluation set, even 10 to 30 examples.
+<break time="250ms"/>
+Minimum evaluation to stay safe. Check your held out set. Run a few regression checks on basic tasks. And test a few edge cases. If it improves your task but breaks basics, you need to adjust.
+<break time="250ms"/>
+Quick recap. Prompting and RAG first. Fine-tune when behavior must be consistent. Start small, measure carefully, and let the greedy algorithm guide the next step.
+<break time="250ms"/>
+Mini exercise. Pick one task you care about. In two or three sentences, explain why prompting might fail, why RAG might fail, and what behavior you would want fine-tuning to lock in.
+<break time="200ms"/>
 End of lesson one.
+</speak>
