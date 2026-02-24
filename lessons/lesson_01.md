@@ -8,9 +8,10 @@ title: Lesson 01
 ## Audio
 
 <audio controls preload="metadata" style="width: 100%;">
+  <source src="../assets/audio/lesson_01.mp3" type="audio/mpeg">
   <source src="../assets/audio/lesson_01.wav" type="audio/wav">
   Your browser does not support the audio element. You can download the file directly:
-  <a href="../assets/audio/lesson_01.wav">lesson_01.wav</a>
+  <a href="../assets/audio/lesson_01.mp3">lesson_01.mp3</a>
 </audio>
 
 ## Objectives
