@@ -6,7 +6,7 @@ on:
 
 jobs:
   notify-telegram:
-    if: contains(github.event.issue.title, 'Lesson 01 assessment submission')
+    if: contains(github.event.issue.title, 'assessment submission')
     runs-on: ubuntu-latest
     steps:
       - name: Send Telegram message
@@ -15,7 +15,7 @@ jobs:
           TELEGRAM_CHAT_ID: ${{ secrets.TELEGRAM_CHAT_ID }}
           ISSUE_URL: ${{ github.event.issue.html_url }}
         run: |
-          MESSAGE="@llm-finetune-daily New Lesson 01 submission received. Please grade and generate the next lesson. Issue: ${ISSUE_URL}"
+          MESSAGE="@llm-finetune-daily New lesson submission received. Please grade and generate the next lesson. Issue: ${ISSUE_URL}"
           curl -sS -X POST "https://api.telegram.org/bot${TELEGRAM_BOT_TOKEN}/sendMessage" \
             -H "Content-Type: application/json" \
             -d "{\"chat_id\":\"${TELEGRAM_CHAT_ID}\",\"text\":\"${MESSAGE}\"}"
