@@ -44,6 +44,22 @@ function exportProfile() {
   if (status) status.textContent = text;
 }
 
+function openProfileIssue() {
+  var profile = getLocal('learning_profile', {});
+  var body = [
+    'Please add this learning profile to progress/learning_profile.md:',
+    '',
+    '```json',
+    JSON.stringify(profile, null, 2),
+    '```'
+  ].join('\n');
+  var title = 'Learning profile update';
+  var url = 'https://github.com/uditk2/llm-finetune-course/issues/new'
+    + '?title=' + encodeURIComponent(title)
+    + '&body=' + encodeURIComponent(body);
+  window.open(url, '_blank');
+}
+
 function initProgressForm() {
   var today = new Date();
   var yyyy = today.getFullYear();
@@ -72,4 +88,20 @@ function exportProgress() {
   var text = JSON.stringify(entries, null, 2);
   var status = document.getElementById('progress_status');
   if (status) status.textContent = text;
+}
+
+function openProgressIssue() {
+  var entries = getLocal('progress_entries', []);
+  var body = [
+    'Please add this progress log to progress/state.json or a new progress file:',
+    '',
+    '```json',
+    JSON.stringify(entries, null, 2),
+    '```'
+  ].join('\n');
+  var title = 'Progress update';
+  var url = 'https://github.com/uditk2/llm-finetune-course/issues/new'
+    + '?title=' + encodeURIComponent(title)
+    + '&body=' + encodeURIComponent(body);
+  window.open(url, '_blank');
 }

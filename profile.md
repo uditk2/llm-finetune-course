@@ -53,6 +53,7 @@ Fill this in so the daily agent can choose the best next lesson. Your entries ar
 <div style="margin-top:16px;">
   <button onclick="saveProfile()">Save Profile</button>
   <button onclick="exportProfile()">Export JSON</button>
+  <button onclick="openProfileIssue()">Save to GitHub</button>
 </div>
 
 <pre id="profile_status" style="margin-top:12px;"></pre>

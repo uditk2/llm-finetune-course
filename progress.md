@@ -24,6 +24,7 @@ Track your daily learning and export updates to share with the agent.
 <div style="margin-top:16px;">
   <button onclick="saveProgressEntry()">Save Entry</button>
   <button onclick="exportProgress()">Export Progress JSON</button>
+  <button onclick="openProgressIssue()">Save to GitHub</button>
 </div>
 
 <pre id="progress_status" style="margin-top:12px;"></pre>
