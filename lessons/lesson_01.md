@@ -5,6 +5,14 @@ title: Lesson 01
 
 # Lesson 01: Fine-Tuning Fundamentals
 
+## Audio
+
+<audio controls preload="metadata" style="width: 100%;">
+  <source src="../assets/audio/lesson_01.wav" type="audio/wav">
+  Your browser does not support the audio element. You can download the file directly:
+  <a href="../assets/audio/lesson_01.wav">lesson_01.wav</a>
+</audio>
+
 ## Objectives
 By the end of this lesson you can:
 - Explain what fine-tuning is (and what it is not).
@@ -62,4 +70,3 @@ Pick one real task you care about. Answer in 2-3 sentences:
 - Why might prompting fail here?
 - Why might RAG fail here?
 - What behavior would you want fine-tuning to lock in?
-
