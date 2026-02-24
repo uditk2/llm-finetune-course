@@ -1,0 +1,16 @@
+# GitHub Pages / Jekyll config
+
+title: LLM Fine-Tuning Course
+description: Greedy-path learning for fine-tuning LLMs
+theme: minima
+
+# Keep build simple
+markdown: kramdown
+
+# Show pages in navigation
+header_pages:
+  - index.md
+  - COURSE.md
+  - profile.md
+  - lessons/lesson_01.md
+  - assessments/lesson_01_questions.md
