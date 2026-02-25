@@ -1,11 +1,13 @@
-# Learning Profile (Fill This In)
+Please add this learning profile to progress/learning_profile.md:
 
-You can fill this on the website and export JSON, then paste here for the agent.
-
-- Prior ML knowledge: (none / basic / solid / expert)
-- Coding comfort: (scripts / notebooks / production)
-- Math comfort: (low / medium / high)
-- Weekly time available (hours):
-- Goal style: (quick win / deep mastery)
-- Target use case:
-- Budget constraints:
+```json
+{
+  "ml_knowledge": "basic",
+  "coding_comfort": "production",
+  "math_comfort": "medium",
+  "weekly_time": "10",
+  "goal_style": "quick win",
+  "use_case": "ability to create fine tuned smaller models and get an understanding of how this works and why.",
+  "budget": "low"
+}
+```
