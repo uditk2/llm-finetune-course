@@ -15,9 +15,6 @@ permissions:
 
 jobs:
   sync-profile:
-    if: |
-      github.event_name == 'workflow_dispatch' ||
-      contains(github.event.issue.title, 'Learning Profile')
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
@@ -32,7 +29,12 @@ jobs:
             const repo = context.repo.repo;
             let issue;
             if (context.eventName === 'workflow_dispatch') {
-              const issue_number = Number(core.getInput('issue_number'));
+              const raw = core.getInput('issue_number');
+              const issue_number = Number.parseInt(raw, 10);
+              if (!issue_number || Number.isNaN(issue_number)) {
+                core.setFailed('workflow_dispatch requires a valid issue_number input.');
+                return;
+              }
               issue = await github.rest.issues.get({ owner, repo, issue_number });
             } else {
               issue = { data: context.payload.issue };
@@ -42,8 +44,20 @@ jobs:
             core.setOutput('author', issue.data.user?.login || '');
             core.setOutput('body', issue.data.body || '');
 
+      - name: Check Title
+        id: title
+        run: |
+          TITLE="${{ steps.issue.outputs.title }}"
+          if echo "$TITLE" | grep -qi "learning profile"; then
+            echo "ok=true" >> "$GITHUB_OUTPUT"
+          else
+            echo "Skip: title does not include 'Learning Profile'."
+            echo "ok=false" >> "$GITHUB_OUTPUT"
+          fi
+
       - name: Validate Author
         id: author
+        if: steps.title.outputs.ok == 'true'
         run: |
           OWNER="${{ github.repository_owner }}"
           AUTHOR="${{ steps.issue.outputs.author }}"
