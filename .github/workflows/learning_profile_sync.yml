@@ -57,8 +57,19 @@ jobs:
               return;
             }
             // Prefer JSON in a fenced block ```json ... ```
-            const match = body.match(/```json\\s*([\\s\\S]*?)```/i);
-            const content = match ? match[1].trim() : body.trim();
+            let content = '';
+            const jsonFence = body.match(/```json\\s*([\\s\\S]*?)```/i);
+            if (jsonFence && jsonFence[1]) {
+              content = jsonFence[1].trim();
+            } else {
+              const anyFence = body.match(/```\\s*([\\s\\S]*?)```/);
+              if (anyFence && anyFence[1]) {
+                content = anyFence[1].trim();
+              } else {
+                const jsonObject = body.match(/\\{[\\s\\S]*\\}/);
+                content = jsonObject ? jsonObject[0].trim() : body.trim();
+              }
+            }
             if (!content) {
               core.setFailed('Issue body is empty; nothing to sync.');
               return;
