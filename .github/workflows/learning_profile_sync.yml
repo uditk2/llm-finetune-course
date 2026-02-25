@@ -20,11 +20,9 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
 
-      - name: Resolve Issue
+      - name: Resolve Issue and Write Profile
         id: issue
         uses: actions/github-script@v7
-        env:
-          ISSUE_NUMBER: ${{ github.event.inputs.issue_number }}
         with:
           script: |
             const owner = context.repo.owner;
@@ -34,7 +32,6 @@ jobs:
               const raw =
                 core.getInput('issue_number') ||
                 (context.payload.inputs && context.payload.inputs.issue_number) ||
-                process.env.ISSUE_NUMBER ||
                 '';
               const issue_number = Number.parseInt(raw, 10);
               if (!issue_number || Number.isNaN(issue_number)) {
@@ -45,54 +42,32 @@ jobs:
             } else {
               issue = { data: context.payload.issue };
             }
-            core.setOutput('number', issue.data.number.toString());
-            core.setOutput('title', issue.data.title || '');
-            core.setOutput('author', issue.data.user?.login || '');
-            core.setOutput('body', issue.data.body || '');
-
-      - name: Check Title
-        id: title
-        run: |
-          TITLE="${{ steps.issue.outputs.title }}"
-          if echo "$TITLE" | grep -qi "learning profile"; then
-            echo "ok=true" >> "$GITHUB_OUTPUT"
-          else
-            echo "Skip: title does not include 'Learning Profile'."
-            echo "ok=false" >> "$GITHUB_OUTPUT"
-          fi
-
-      - name: Validate Author
-        id: author
-        if: steps.title.outputs.ok == 'true'
-        run: |
-          OWNER="${{ github.repository_owner }}"
-          AUTHOR="${{ steps.issue.outputs.author }}"
-          if [ "$OWNER" != "$AUTHOR" ]; then
-            echo "Skip: issue author is '$AUTHOR' not repo owner '$OWNER'."
-            echo "ok=false" >> "$GITHUB_OUTPUT"
-            exit 0
-          fi
-          echo "ok=true" >> "$GITHUB_OUTPUT"
-
-      - name: Write Learning Profile
-        if: steps.author.outputs.ok == 'true'
-        uses: actions/github-script@v7
-        with:
-          script: |
             const fs = require('fs');
-            const body = `${{ toJson(steps.issue.outputs.body) }}`;
-            const raw = JSON.parse(body);
+            const title = issue.data.title || '';
+            const author = issue.data.user?.login || '';
+            const body = issue.data.body || '';
+            if (!/learning profile/i.test(title)) {
+              core.info("Skip: title does not include 'Learning Profile'.");
+              core.setOutput('wrote', 'false');
+              return;
+            }
+            if (owner !== author) {
+              core.info(`Skip: issue author is '${author}' not repo owner '${owner}'.`);
+              core.setOutput('wrote', 'false');
+              return;
+            }
             // Prefer JSON in a fenced block ```json ... ```
-            const match = raw.match(/```json\\s*([\\s\\S]*?)```/i);
-            const content = match ? match[1].trim() : raw.trim();
+            const match = body.match(/```json\\s*([\\s\\S]*?)```/i);
+            const content = match ? match[1].trim() : body.trim();
             if (!content) {
               core.setFailed('Issue body is empty; nothing to sync.');
               return;
             }
             fs.writeFileSync('progress/learning_profile.md', content + '\n', 'utf8');
+            core.setOutput('wrote', 'true');
 
       - name: Commit and Push
-        if: steps.author.outputs.ok == 'true'
+        if: steps.issue.outputs.wrote == 'true'
         run: |
           if git diff --quiet; then
             echo "No changes to commit."
